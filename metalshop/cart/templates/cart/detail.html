@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+    Cart
+{% endblock %}
+
+{% block content %}
+    <section class="cart">
+        <h2>Cart</h2>
+        <div class="cart__list">
+            {% for item in cart %}
+                {% with product=item.product %}
+                    <div class="cart__list-item">
+                        <img src="{% if product.image.url %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
+                             alt="">
+                        <div class="cart__list-item-info">
+                            <h4>{{ product.name }}</h4>
+                        </div>
+                        <div class="cart__list-item-q">
+                            <p>Quantity: {{ item.quantity }}</p>
+                        </div>
+                        <div class="cart__list-item-controls">
+                            <form action="{% url 'cart:cart_remove' product_id %}" method="post">
+                                <input type="submit" class="remove-btn" value="remove">
+                                {% csrf_token %}
+                            </form>
+                        </div>
+                        <div class="cart__list-item-price">
+                            {% if product.discount %}
+                                <div class="discount d-flex gap-4 align-items-center">
+                                    <p class="through">{{ product.price }}</p>
+                                    <p class="price">{{ product.sell_price }}</p>
+                                </div>
+                            {% else %}
+                                <p class="price">{{ product.price }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endwith %}
+            {% endfor %}
+        </div>
+
+        <div class="total">
+            <h4>Total Sum: {{ cart.get_total_price }}</h4>
+        </div>
+        <div class="cart__buttons">
+            <a href="/shop" class="button btn">Continue Shopping</a>
+            <a href="#" class="button btn">Checkout</a>
+        </div>
+    </section>
+{% endblock %}

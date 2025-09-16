@@ -16,6 +16,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('main:products_list_by_cat', args=[self.slug])
+
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.PROTECT)
@@ -24,7 +27,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=100, unique=True)
     image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
     description = models.TextField(blank=True)
-    price = models.DecimalField(decimal_places=2, max_digits=4)
+    price = models.DecimalField(decimal_places=2, max_digits=6)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now_add=True)

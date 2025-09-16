@@ -1,5 +1,5 @@
 body {
-    font-family: "Bodoni Moda SC", serif;
+    font-family: "Alegreya", serif;
     font-size: 16px;
     padding: 0;
     margin: 0;
@@ -120,4 +120,21 @@ header {
 .price {
     font-weight: 800;
     font-size: 24px;
+}
+
+.topbar a {
+    text-transform: uppercase;
+}
+
+.products-list__item {
+    width: calc(100vw / 3 - 20px);
+}
+
+.selected a {
+    color: #a52834;
+    text-decoration: underline;
+}
+
+.disabled {
+    opacity: 0.3;
 }

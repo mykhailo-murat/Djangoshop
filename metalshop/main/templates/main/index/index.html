@@ -7,11 +7,9 @@
 
 
 {% block content %}
-    <section class="home d-flex flex-column">
-        <div class="home__title"><a href="#" class="mt-4"> ALL PRODUCTS </a></div>
-
+    <section class="home d-flex flex-column pt-4">
         <div class="home__recs">
-            <h2>Popular</h2>
+            <h2 class="text-center">Popular</h2>
             <div class="home__recs-cards d-flex gap-4">
                 {% for product in products %}
                     <a href="{{ product.get_absolute_url }}" class="home__recs-card  d-flex flex-column">
