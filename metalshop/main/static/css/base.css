@@ -1,0 +1,123 @@
+body {
+    font-family: "Bodoni Moda SC", serif;
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    font-weight: 400;
+}
+
+:root {
+    --box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+h2 {
+    font-size: 36px;
+    font-weight: 800;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+h5 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+header {
+    background-color: #fff;
+    box-shadow: var(--box-shadow);
+    height: 100px;
+}
+
+.header__container {
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    height: 100%;
+}
+
+.header__profile a {
+    font-weight: 800;
+}
+
+.header__logo {
+    position: fixed;
+    top: 1%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+.header__logo img {
+    max-width: 80px;
+}
+
+.header__menu-link {
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.container {
+    max-width: 100%;
+    padding: 0 15px;
+}
+
+.home__recs-cards {
+
+}
+
+.home__recs-card img {
+    object-fit: cover;
+    height: auto;
+    max-width: 100%;
+}
+
+
+/*//product*/
+
+.product {
+
+}
+
+.button {
+    border: 1px solid #000;
+    box-shadow: var(--box-shadow);
+    border-radius: 0;
+}
+
+.discount {
+
+}
+
+.through {
+    text-decoration: line-through;
+}
+
+.price {
+    font-weight: 800;
+    font-size: 24px;
+}

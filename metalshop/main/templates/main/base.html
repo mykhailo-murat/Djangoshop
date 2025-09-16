@@ -1,0 +1,48 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> {% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+<header class="header sticky-top">
+    <div class="header__container d-flex">
+        <nav class="header__nav">
+            <ul class="header__menu d-flex">
+                <li><a href="/" class="header__menu-link m-3">Home</a></li>
+                <li><a href="#" class="header__menu-link m-3">Shop</a></li>
+            </ul>
+        </nav>
+        <div class="header__logo">
+            <a href="/"> <img src=" {% static 'img/logo.png' %}" alt=""> </a>
+        </div>
+        <div class="header__profile">
+            <a href="/">LOGIN</a>
+        </div>
+    </div>
+</header>
+
+<div class="main">
+    <div class="container">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</div>
+
+
+<script src="{% static  'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

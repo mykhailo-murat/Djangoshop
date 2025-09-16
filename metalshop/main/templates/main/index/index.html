@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block content %}
+    <section class="home d-flex flex-column">
+        <div class="home__title"><a href="#" class="mt-4"> ALL PRODUCTS </a></div>
+
+        <div class="home__recs">
+            <h2>Popular</h2>
+            <div class="home__recs-cards d-flex gap-4">
+                {% for product in products %}
+                    <a href="{{ product.get_absolute_url }}" class="home__recs-card  d-flex flex-column">
+                        <img src="{{ product.image.url }}" alt="">
+                        <h4> {{ product.name }}</h4>
+                        {% if product.discount %}
+                            <div class="discount d-flex gap-4 align-items-center">
+                                <p class="through">{{ product.price }}</p>
+                                <p class="price">{{ product.sell_price }}</p>
+                            </div>
+                        {% else %}
+                            <p class="price">{{ product.price }}</p>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

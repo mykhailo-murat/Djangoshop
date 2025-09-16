@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ product.name }}
+{% endblock %}
+
+{% block content %}
+    <section class="product d-flex gap-4 pt-4">
+
+        <div class="product__image">
+            <img src="{% if product.image.url %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
+                 alt="">
+        </div>
+        <div class="product__info">
+            <h2>{{ product.name }}</h2>
+            <h3>{{ product.category }}</h3>
+            <p>{{ product.description |linebreaks }}</p>
+            {% if product.discount %}
+                <div class="discount d-flex gap-4 align-items-center">
+                    <p class="through">{{ product.price }}</p>
+                    <p class="price">{{ product.sell_price }}</p>
+                </div>
+            {% else %}
+                <p class="price">{{ product.price }}</p>
+            {% endif %}
+
+            <a class="btn button" href="#">ADD TO CART</a>
+
+        </div>
+
+    </section>
+{% endblock %}
