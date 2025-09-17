@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+    <section class="profile">
+        <h2 class="text-center">Profile</h2>
+        <form action="{% url 'user:profile' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile__image">
+                <img src=" {% if user.image %} {{ user.iamge.url }} {% else %} {% static 'img/noimage.png' %} {% endif %}"
+                     alt="Avatar">
+            </div>
+            <input type="file" class="form-control form-style mt-2" id="image" name="image" accept="image/*">
+
+            <label for="id_first_name">First Name</label>
+            <input type="text" class="form-control form-style" id="id_first_name" name="first_name"
+                   placeholder="First Name" value="{{ form.first_name.value }}" required>
+
+            <label for="id_last_name">Last Name</label>
+            <input type="text" class="form-control form-style" id="id_last_name" name="last_name"
+                   placeholder="Last Name" value="{{ form.last_name.value }}" required>
+
+            <label for="id_username">Username</label>
+            <input type="text" class="form-control form-style" id="id_username" name="username"
+                   placeholder="Username" value="{{ form.username.value }}" required>
+
+            <label for="id_email">Email</label>
+            <input type="email" class="form-control form-style" id="id_email" name="email"
+                   placeholder="Email" value="{{ form.email.value }}" required>
+
+            <button type="submit" class="button btn">SUBMIT</button>
+
+        </form>
+
+
+        <div class="profile__orders">
+            <h3 class="text-center">Your Orders</h3>
+            {% if  orders %}
+                <div class="profile__orders-list">
+                    {% for order in orders %}
+                        <div class="profile__orders-list-item">
+                            <h5> Order# {{ order.id }}</h5>
+                            {% for item in order.items.all %}
+                                <p>{{ item.product.name }}</p>
+                                <p>{{ item.product.quantity }}</p>
+                                <p>{{ item.price }}</p>
+                                <p>{{ order.created }}</p>
+                            {% endfor %}
+
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% else %}
+                <p>You haven`t ordered anything yet.</p>
+            {% endif %}
+        </div>
+
+
+    </section>
+{% endblock %}

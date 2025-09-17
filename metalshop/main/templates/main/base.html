@@ -28,8 +28,35 @@
         <div class="header__logo">
             <a href="/"> <img src=" {% static 'img/logo.png' %}" alt=""> </a>
         </div>
-        <div class="header__profile">
-            <a href="/">LOGIN</a>
+
+        <div class="header__profile d-flex align-items-center justify-content-center gap-4">
+            <div class="header__cart">
+                <a href="{% url 'cart:cart_detail' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M351.9 329.506H206.81l-3.072-12.56H368.16l26.63-116.019-217.23-26.04-9.952-58.09h-50.4v21.946h31.894l35.233 191.246a32.927 32.927 0 1 0 36.363 21.462h100.244a32.825 32.825 0 1 0 30.957-21.945zM181.427 197.45l186.51 22.358-17.258 75.195H198.917z"
+                              data-name="Shopping Cart"/>
+                    </svg>
+                </a>
+                <p class="header__cart-q">
+                    {% with cart_quantity=cart|length %}
+                        {% if cart_quantity > 0 %}
+                            {{ cart_quantity }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    {% endwith %}
+                </p>
+            </div>
+            <div class="header__user d-flex align-items-center gap-4">
+                {% if user.is_authenticated %}
+                    <p class="user-name">Hello, <a href="{% url 'user:profile' %}">{{ user.username }}</a>!</p>
+                    <a href="{% url 'user:logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'user:login' %}">Login</a>
+                    <a href="{% url 'user:registration' %}">Register</a>
+                {% endif %}
+            </div>
+
         </div>
     </div>
 </header>

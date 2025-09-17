@@ -9,7 +9,7 @@
     <section class="product d-flex gap-4 pt-4">
 
         <div class="product__image">
-            <img src="{% if product.image.url %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
+            <img src="{% if product.image %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
                  alt="">
         </div>
         <div class="product__info">
@@ -25,10 +25,10 @@
                 <p class="price">{{ product.price }}</p>
             {% endif %}
 
-            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+            <form action="{% url 'cart:cart_add' product.id %}" method="post" class="product__add-to-cart">
                 {{ cart_product_form }}
                 {% csrf_token %}
-                <input type="submit" class="add-to-cart-btn" value="Add to Cart">
+                <input type="submit" class="add-to-cart-btn btn button mt-4" value="Add to Cart">
             </form>
         </div>
     </section>

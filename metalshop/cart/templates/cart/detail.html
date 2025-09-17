@@ -6,46 +6,58 @@
 
 {% block content %}
     <section class="cart">
-        <h2>Cart</h2>
+        <h2 class="text-center">Cart</h2>
         <div class="cart__list">
             {% for item in cart %}
                 {% with product=item.product %}
-                    <div class="cart__list-item">
-                        <img src="{% if product.image.url %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
-                             alt="">
-                        <div class="cart__list-item-info">
-                            <h4>{{ product.name }}</h4>
+                    <div class="cart__list-item d-flex gap-4 align-items-center justify-content-between">
+                        <div class="cart__list-item__left d-flex align-items-center gap-4">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.image.url %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
+                                     alt="">
+                            </a>
+                            <div class="cart__list-item-info">
+                                <h4 class="mb-0">{{ product.name }}</h4>
+                            </div>
                         </div>
-                        <div class="cart__list-item-q">
-                            <p>Quantity: {{ item.quantity }}</p>
-                        </div>
-                        <div class="cart__list-item-controls">
-                            <form action="{% url 'cart:cart_remove' product_id %}" method="post">
-                                <input type="submit" class="remove-btn" value="remove">
-                                {% csrf_token %}
-                            </form>
-                        </div>
-                        <div class="cart__list-item-price">
-                            {% if product.discount %}
-                                <div class="discount d-flex gap-4 align-items-center">
-                                    <p class="through">{{ product.price }}</p>
-                                    <p class="price">{{ product.sell_price }}</p>
-                                </div>
-                            {% else %}
-                                <p class="price">{{ product.price }}</p>
-                            {% endif %}
+                        <div class="cart__list-item__right d-flex align-items-center gap-4">
+                            <div class="cart__list-item-q">
+                                <p class="mb-0">Quantity: {{ item.quantity }}</p>
+                            </div>
+                            <div class="cart__list-item-controls">
+                                <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                                    <input type="submit" class="button remove-btn button-red" value="remove">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                            <div class="cart__list-item-price">
+                                {% if product.discount %}
+                                    <div class="discount d-flex gap-4 align-items-center">
+                                        <p class="through mb-0">{{ product.price }}</p>
+                                        <p class="price mb-0">{{ product.sell_price }}</p>
+                                    </div>
+                                {% else %}
+                                    <p class="price mb-0">{{ product.price }}</p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 {% endwith %}
             {% endfor %}
         </div>
 
-        <div class="total">
+        <div class="total pt-4 text-end">
             <h4>Total Sum: {{ cart.get_total_price }}</h4>
         </div>
-        <div class="cart__buttons">
+        <div class="cart__buttons pt-4">
             <a href="/shop" class="button btn">Continue Shopping</a>
-            <a href="#" class="button btn">Checkout</a>
+
+            {% with cart_quantity=cart|length %}
+                {% if cart_quantity > 0 %}
+                    <a href="{% url 'orders:order_create' %}" class="button btn button-black">Checkout</a>
+                {% endif %}
+            {% endwith %}
+
         </div>
     </section>
 {% endblock %}
