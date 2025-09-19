@@ -8,9 +8,43 @@
 {% block content %}
     <section class="product d-flex gap-4 pt-4">
 
-        <div class="product__image">
-            <img src="{% if product.image %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
-                 alt="">
+        <div class="product__images">
+            {% if product.images.all|length > 1 %}
+                {% for image in product.images.all %}
+                    <img class="product__images-item" src="{{ image.image.url }}" alt="" style="display: none"
+                         data-index="{{ forloop.counter0 }}">
+                {% endfor %}
+            {% else %}
+                <img class="product__images-item" src="{{ product.image.url }}" alt="">
+            {% endif %}
+
+            <div class="product__image-nav">
+                <button class="prev-bnt">&lsaquo;</button>
+                <button class="next-bnt">&rsaquo;</button>
+            </div>
+            <script>
+                const images = document.querySelectorAll('.product__images-item');
+                const prev_btn = document.querySelector('.prev-bnt');
+                const next_btn = document.querySelector('.next-bnt');
+                let currentIndex = 0;
+                images[currentIndex].style.display = 'block';
+                if (images.length === 1) {
+                    prev_btn.style.display = 'none'
+                    next_btn.style.display = 'none'
+                } else {
+                    prev_btn.addEventListener('click', () => {
+                        images[currentIndex].style.display = 'none';
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        images[currentIndex].style.display = 'block'
+                    })
+                    next_btn.addEventListener('click', () => {
+                        images[currentIndex].style.display = 'none';
+                        currentIndex = (currentIndex + 1) % images.length;
+                        images[currentIndex].style.display = 'block'
+                    })
+                }
+            </script>
+
         </div>
         <div class="product__info">
             <h2>{{ product.name }}</h2>

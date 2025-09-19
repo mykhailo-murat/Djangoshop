@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import OrderItem, Order
 from .forms import OrderCreateForm
 from cart.cart import Cart
+from django.urls import reverse
 
 
 # Create your views here.
@@ -14,14 +15,17 @@ def order_create(request):
         if form.is_valid():
             order = form.save()
             for item in cart:
+                discount_price = item['product'].sell_price()
                 OrderItem.objects.create(
                     order=order,
                     product=item['product'],
-                    price=item['price'],
+                    price=discount_price,
                     quantity=item['quantity'],
                 )
             cart.clear()
-            return redirect('orders:order_created', order_id=order.id)
+
+            request.session['order_id'] = order.id
+            return redirect(reverse('payment:process'))
     else:
         form = OrderCreateForm(request=request)
 

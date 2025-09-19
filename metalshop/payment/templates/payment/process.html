@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}
+    Payment Process
+{% endblock %}
+
+{% block content %}
+    <div class="payment">
+        <h2>Payment</h2>
+
+        <div class="order">
+            {% for item in order.items.all %}
+                {% with product=item.product %}
+                    <div class="order__item d-flex gap-4 align-items-center justify-content-between">
+                        <div class="order__item__left d-flex align-items-center gap-4">
+                            <a href="{{ product.get_absolute_url }}">
+                                <img src="{% if product.image.url %} {{ product.image.url }}{% else %}{% static 'img/noimage.png' %}{% endif %}"
+                                     alt="">
+                            </a>
+                            <div class="order__item-info">
+                                <h4 class="mb-0">{{ product.name }}</h4>
+                            </div>
+                        </div>
+                        <div class="order__item__right d-flex align-items-center gap-4">
+                            <div class="order__item-item-q">
+                                <p class="mb-0">Quantity: {{ item.quantity }}</p>
+                            </div>
+                            <div class="order__item-item-controls">
+                                <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                                    <input type="submit" class="button remove-btn button-red" value="remove">
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                            <div class="order__item-item-price">
+                                {% if product.discount %}
+                                    <div class="discount d-flex gap-4 align-items-center">
+                                        <p class="through mb-0">{{ product.price }}</p>
+                                        <p class="price mb-0">{{ product.sell_price }}</p>
+                                    </div>
+                                {% else %}
+                                    <p class="price mb-0">{{ product.price }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+            {% endfor %}
+
+            <form action="{% url 'payment:process' %}" method="post" class="payform">
+                <input type="submit" name="" id="" value="Pay now" class="paynow">
+                {% csrf_token %}
+            </form>
+        </div>
+
+
+    </div>
+{% endblock %}
