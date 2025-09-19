@@ -6,7 +6,7 @@
 
 {% block content %}
     <div class="payment">
-        <h2>Payment</h2>
+        <h2 class="text-center">Payment</h2>
 
         <div class="order">
             {% for item in order.items.all %}
@@ -46,8 +46,14 @@
                 {% endwith %}
             {% endfor %}
 
-            <form action="{% url 'payment:process' %}" method="post" class="payform">
-                <input type="submit" name="" id="" value="Pay now" class="paynow">
+            <div class="total pt-4 text-end">
+                <h4>Total Sum: {{ order.get_total_cost }}</h4>
+            </div>
+
+
+            <form action="{% url 'payment:process' %}" method="post"
+                  class="payform mt-4 text-center justify-content-center">
+                <input type="submit" name="" id="" value="Pay now" class="paynow button button-black">
                 {% csrf_token %}
             </form>
         </div>

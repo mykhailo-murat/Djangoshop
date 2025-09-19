@@ -15,23 +15,14 @@ class OrderCreateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         # автозаповнення полів для залогіненого користувача
-        if self.request and getattr(self.request, 'user', None) and self.request.user.is_authenticated:
-            user = self.request.user
-            self.initial.setdefault('first_name', user.first_name or '')
-            self.initial.setdefault('last_name', user.last_name or '')
-            self.initial.setdefault('email', user.email or '')
+        if self.request.user.is_authenticated:
+            self.initial['first_name'] = self.request.user.first_name
+            self.initial['last_name'] = self.request.user.last_name
+            self.initial['email'] = self.request.user.email
 
     def save(self, commit=True):
         order = super().save(commit=False)
-
-        # прив’язуємо користувача, якщо він є
-        if self.request and getattr(self.request, 'user', None) and self.request.user.is_authenticated:
-            order.user = self.request.user
-        else:
-            # якщо в моделі user є null=True — це норм
-            # інакше: або заборонити неавторизованих, або кидати ValidationError
-            order.user = None
-
+        order.user = self.request.user
         if commit:
             order.save()
         return order

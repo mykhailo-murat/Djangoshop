@@ -206,7 +206,29 @@ header {
     margin: 0 auto;
 }
 
+.profile {
+    max-width: 970px;
+    margin: 0 auto;
+}
+
+.profile__image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
 .login {
     max-width: 970px;
     margin: 0 auto;
+}
+
+.payment {
+    max-width: 970px;
+    margin: 0 auto;
+}
+
+.order__item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }

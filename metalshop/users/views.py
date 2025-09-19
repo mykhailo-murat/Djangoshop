@@ -12,7 +12,7 @@ from orders.models import Order, OrderItem
 
 def login(request):
     if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
+        form = UserLoginForm(request,data=request.POST)
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
@@ -21,7 +21,7 @@ def login(request):
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('main:products_list'))
     else:
-        form = UserLoginForm
+        form = UserLoginForm(request)
     return render(request, 'users/login.html', {'form': form})
 
 
@@ -38,7 +38,7 @@ def registration(request):
             user = form.instance
             auth.login(request, user)
             messages.success(request, f'{user.username}, Registered')
-            return HttpResponseRedirect(reverse('user:login'))
+            return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = UserRegistrationForm()
     return render(request, 'users/registration.html', {'form': form})
@@ -47,7 +47,7 @@ def registration(request):
 @login_required()
 def profile(request):
     if request.method == 'POST':
-        form = ProfileForm(data=request.POST, instance=request.user, files=request.files)
+        form = ProfileForm(data=request.POST, instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile Changed')

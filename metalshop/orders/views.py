@@ -23,15 +23,8 @@ def order_create(request):
                     quantity=item['quantity'],
                 )
             cart.clear()
-
             request.session['order_id'] = order.id
             return redirect(reverse('payment:process'))
     else:
         form = OrderCreateForm(request=request)
-
     return render(request, 'order/create.html', {'cart': cart, 'form': form})
-
-
-def order_created(request, order_id):
-    order = get_object_or_404(Order, pk=order_id)
-    return render(request, 'order/created.html', {'order': order})
